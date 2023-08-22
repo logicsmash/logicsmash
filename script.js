@@ -32,7 +32,7 @@ function calculate() {
     // 結果を出力
     document.getElementById('totalGetBullet').innerText = totalGetBullet;
     document.getElementById('totalUseBullet').innerText = totalUseBullet;
-    document.getElementById('lackOfBullet').innerText = lackOfBullet > 0 ? lackOfBullet : "不足なし";
+    document.getElementById('lackOfBullet').innerText = lackOfBullet > 0 ? lackOfBullet : "不足無し";
     document.getElementById('needSub').innerText = needSub;
 }
 
