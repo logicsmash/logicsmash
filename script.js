@@ -15,16 +15,24 @@ function calculate() {
     let realTime = clearTime + ADD_TIME;
     let totalUseBullet = Math.round(difficulty * (7200 / realTime));
 
-    //不足弾数
-    let lackOfBullet = Math.ceil(totalGetBullet - totalUseBullet);
+      //不足弾数
+    let lackOfBullet = totalUseBullet - totalGetBullet;
+    
+    //不足弾数が0以下なら0を設定
+    if (lackOfBullet <= 0) {
+        lackOfBullet = 0;
+    }
 
     //必要サブ数
-    let needSub = Math.ceil((totalUseBullet - totalGetBullet) / AVERAGE_BULLET);
+    let needSub = 0;
+    if (lackOfBullet > 0) {
+        needSub = Math.ceil(lackOfBullet / AVERAGE_BULLET);
+    }
 
     // 結果を出力
     document.getElementById('totalGetBullet').innerText = totalGetBullet;
     document.getElementById('totalUseBullet').innerText = totalUseBullet;
-    document.getElementById('lackOfBullet').innerText = lackOfBullet;
+    document.getElementById('lackOfBullet').innerText = lackOfBullet > 0 ? lackOfBullet : "不足なし";
     document.getElementById('needSub').innerText = needSub;
 }
 
