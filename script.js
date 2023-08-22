@@ -16,7 +16,7 @@ function calculate() {
     let totalUseBullet = Math.round(difficulty * (7200 / realTime));
 
     //不足弾数
-    let lackOfBullet = Math.ceil(totalUseBullet - totalGetBullet);
+    let lackOfBullet = Math.ceil(totalGetBullet - totalUseBullet);
 
     //必要サブ数
     let needSub = Math.ceil((totalUseBullet - totalGetBullet) / AVERAGE_BULLET);
