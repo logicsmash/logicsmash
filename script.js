@@ -23,3 +23,10 @@ function calculate() {
     document.getElementById('totalUseBullet').innerText = totalUseBullet;
     document.getElementById('needSub').innerText = needSub;
 }
+
+function checkHankakuInput(e) {
+    // 全角文字を含むかどうかをチェック
+    if (/[^\x01-\x7E]+/.test(e.target.value)) {
+        e.target.value = e.target.value.replace(/[^\x01-\x7E]/g, "");
+    }
+}
