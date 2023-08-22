@@ -15,12 +15,16 @@ function calculate() {
     let realTime = clearTime + ADD_TIME;
     let totalUseBullet = Math.round(difficulty * (7200 / realTime));
 
+    //不足弾数
+    let lackOfBullet = Math.ceil(totalUseBullet - totalGetBullet);
+
     //必要サブ数
     let needSub = Math.ceil((totalUseBullet - totalGetBullet) / AVERAGE_BULLET);
 
     // 結果を出力
     document.getElementById('totalGetBullet').innerText = totalGetBullet;
     document.getElementById('totalUseBullet').innerText = totalUseBullet;
+    document.getElementById('lackOfBullet').innerText = lackOfBullet;
     document.getElementById('needSub').innerText = needSub;
 }
 
