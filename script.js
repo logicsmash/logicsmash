@@ -5,7 +5,7 @@ function calculate() {
 
     // 入力された数量を取得
     let peopleCount = parseInt(document.getElementById('peopleCount').value, 10);
-    let clearTime = parseFloat(document.getElementById('haveBullet').value);
+    let haveBullet = parseFloat(document.getElementById('haveBullet').value);
     let clearTime = parseFloat(document.getElementById('clearTime').value);
     let difficulty = parseFloat(document.getElementById('difficulty').value);
 
