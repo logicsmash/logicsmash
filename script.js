@@ -9,6 +9,7 @@ document.getElementById("rollButton").addEventListener("click", function() {
 
     setTimeout(function() {
         clearInterval(intervalId);
+        rolls = []; // ここでrollsを再初期化
         for (let i = 1; i <= 3; i++) {
             rolls.push(Math.floor(Math.random() * 6) + 1);
             document.getElementById("dice" + i).src = "dice" + rolls[i - 1] + ".png";
@@ -32,13 +33,11 @@ function getResultImage(rolls) {
             return "zorome.png";
         }
     } else if (Object.values(counts).includes(2)) {
-        // 2つ同じ数字の特殊条件をチェック
-        let doubleNumber = rolls.find(roll => counts[roll] === 2);
-        let otherNumber = rolls.find(roll => counts[roll] === 1);
-        if ((otherNumber === 1 || otherNumber === 6) && (doubleNumber !== 1 && doubleNumber !== 6)) {
-            return "yakuari" + otherNumber + ".png";
-        } else {
-            return "yakuari" + doubleNumber + ".png";
+        // 2つ同じ目と1つ異なる目の処理を更新
+        let doubleNumber = Object.keys(counts).find(key => counts[key] === 2);
+        let otherNumber = Object.keys(counts).find(key => counts[key] === 1);
+        if (otherNumber) { // 2つ同じと1つ異なる目がある場合
+            return `yakuari${otherNumber}.png`;
         }
     } else if (new Set(rolls).size === 3) {
         if (rolls.includes(4) && rolls.includes(5) && rolls.includes(6)) {
