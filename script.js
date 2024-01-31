@@ -19,7 +19,6 @@ document.getElementById("rollButton").addEventListener("click", function() {
     }, 2000);
 });
 
-
 function getResultImage(rolls) {
     let counts = {};
     rolls.forEach(function(roll) {
@@ -33,7 +32,14 @@ function getResultImage(rolls) {
             return "zorome.png";
         }
     } else if (Object.values(counts).includes(2)) {
-        return "yakuari" + rolls.find(roll => counts[roll] === 2) + ".png";
+        // 2つ同じ数字の特殊条件をチェック
+        let doubleNumber = rolls.find(roll => counts[roll] === 2);
+        let otherNumber = rolls.find(roll => counts[roll] === 1);
+        if ((otherNumber === 1 || otherNumber === 6) && (doubleNumber !== 1 && doubleNumber !== 6)) {
+            return "yakuari" + otherNumber + ".png";
+        } else {
+            return "yakuari" + doubleNumber + ".png";
+        }
     } else if (new Set(rolls).size === 3) {
         if (rolls.includes(4) && rolls.includes(5) && rolls.includes(6)) {
             return "sigoro.png";
