@@ -1,45 +1,45 @@
-function calculate() {
-    //定義
-    const AVERAGE_BULLET = 1100;
-    const ADD_TIME = 15;
+document.getElementById("rollButton").addEventListener("click", function() {
+    let rolls = [];
+    let intervalId = setInterval(function() {
+        for (let i = 1; i <= 3; i++) {
+            let roll = Math.floor(Math.random() * 6) + 1;
+            document.getElementById("dice" + i).src = "dice" + roll + ".png";
+        }
+    }, 100);
 
-    // 入力された数量を取得
-    let peopleCount = parseInt(document.getElementById('peopleCount').value, 10);
-    let haveBullet = parseFloat(document.getElementById('haveBullet').value);
-    let clearTime = parseFloat(document.getElementById('clearTime').value);
-    let difficulty = parseFloat(document.getElementById('difficulty').value);
+    setTimeout(function() {
+        clearInterval(intervalId);
+        for (let i = 1; i <= 3; i++) {
+            rolls.push(Math.floor(Math.random() * 6) + 1);
+            document.getElementById("dice" + i).src = "dice" + rolls[i - 1] + ".png";
+        }
 
-    // 合計獲得弾数を計算
-    let totalGetBullet = Math.round(AVERAGE_BULLET * peopleCount) + haveBullet;
+        let resultImageSrc = getResultImage(rolls);
+        document.getElementById("resultImage").src = resultImageSrc;
+    }, 2000);
+});
 
-    // 合計消費弾数を計算
-    let realTime = clearTime + ADD_TIME;
-    let totalUseBullet = Math.round(difficulty * (7200 / realTime));
 
-      //不足弾数
-    let lackOfBullet = totalUseBullet - totalGetBullet;
-    
-    //不足弾数が0以下なら0を設定
-    if (lackOfBullet <= 0) {
-        lackOfBullet = 0;
+function getResultImage(rolls) {
+    let counts = {};
+    rolls.forEach(function(roll) {
+        counts[roll] = (counts[roll] || 0) + 1;
+    });
+
+    if (Object.values(counts).includes(3)) {
+        if (counts[1] === 3) {
+            return "pinzoro.png";
+        } else {
+            return "zorome.png";
+        }
+    } else if (Object.values(counts).includes(2)) {
+        return "yakuari" + rolls.find(roll => counts[roll] === 2) + ".png";
+    } else if (new Set(rolls).size === 3) {
+        if (rolls.includes(4) && rolls.includes(5) && rolls.includes(6)) {
+            return "sigoro.png";
+        } else if (rolls.includes(1) && rolls.includes(2) && rolls.includes(3)) {
+            return "hihumi.png";
+        }
     }
-
-    //必要サブ数
-    let needSub = 0;
-    if (lackOfBullet > 0) {
-        needSub = Math.ceil(lackOfBullet / AVERAGE_BULLET);
-    }
-
-    // 結果を出力
-    document.getElementById('totalGetBullet').innerText = totalGetBullet;
-    document.getElementById('totalUseBullet').innerText = totalUseBullet;
-    document.getElementById('lackOfBullet').innerText = lackOfBullet > 0 ? lackOfBullet : "不足無し";
-    document.getElementById('needSub').innerText = needSub;
-}
-
-function checkHankakuInput(e) {
-    // 全角文字を含むかどうかをチェック
-    if (/[^\x01-\x7E]+/.test(e.target.value)) {
-        e.target.value = e.target.value.replace(/[^\x01-\x7E]/g, "");
-    }
+    return "yakunasi.png";
 }
